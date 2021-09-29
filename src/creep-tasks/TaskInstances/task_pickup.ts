@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type pickupTargetType = Resource;
 
 export class TaskPickup extends Task {
 
 	static taskName = 'pickup';
+	// @ts-ignore
 	target: pickupTargetType;
 
 	constructor(target: pickupTargetType, options = {} as TaskOptions) {

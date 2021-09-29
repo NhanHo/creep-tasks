@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type meleeAttackTargetType = Creep | Structure;
 
 export class TaskMeleeAttack extends Task {
 
 	static taskName = 'meleeAttack';
+	// @ts-ignore
 	target: meleeAttackTargetType;
 
 	constructor(target: meleeAttackTargetType, options = {} as TaskOptions) {

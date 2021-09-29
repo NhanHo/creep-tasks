@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type repairTargetType = Structure;
 
 export class TaskRepair extends Task {
 
 	static taskName = 'repair';
+	// @ts-ignore
 	target: repairTargetType;
 
 	constructor(target: repairTargetType, options = {} as TaskOptions) {

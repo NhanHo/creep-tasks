@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type fortifyTargetType = StructureWall | StructureRampart;
 
 export class TaskFortify extends Task {
 
 	static taskName = 'fortify';
+	// @ts-ignore
 	target: fortifyTargetType;
 
 	constructor(target: fortifyTargetType, options = {} as TaskOptions) {

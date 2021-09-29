@@ -1,4 +1,4 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export const MIN_LIFETIME_FOR_BOOST = 0.9;
 
@@ -47,6 +47,7 @@ const boostParts: { [boostType: string]: BodyPartConstant } = {
 
 export class TaskGetBoosted extends Task {
 	static taskName = 'getBoosted';
+	// @ts-ignore
 	target: getBoostedTargetType;
 
 	data: {
@@ -55,9 +56,9 @@ export class TaskGetBoosted extends Task {
 	};
 
 	constructor(target: getBoostedTargetType,
-				boostType: _ResourceConstantSansEnergy,
-				partCount: number | undefined = undefined,
-				options                       = {} as TaskOptions) {
+		boostType: _ResourceConstantSansEnergy,
+		partCount: number | undefined = undefined,
+		options = {} as TaskOptions) {
 		super(TaskGetBoosted.taskName, target, options);
 		// Settings
 		this.data.resourceType = boostType;

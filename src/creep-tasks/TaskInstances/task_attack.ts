@@ -1,13 +1,14 @@
 // Attack task, includes attack and ranged attack if applicable.
 // Use meleeAttack and rangedAttack for the exclusive variants.
 
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type attackTargetType = Creep | Structure;
 
 export class TaskAttack extends Task {
 
 	static taskName = 'attack';
+	// @ts-ignore
 	target: attackTargetType;
 
 	constructor(target: attackTargetType, options = {} as TaskOptions) {

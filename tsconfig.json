@@ -1,35 +1,30 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2015",
+    "module": "esnext",
+    "target": "es2017",
     "lib": [
       "dom",
       "es2016"
     ],
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "outDir": "dist",
     "declaration": true,
-    "baseUrl": "./",
-    "sourceMap": false,
-    "strict": true,
+    "baseUrl": "creep-tasks/src/",
+    "sourceMap": true,
+    "strict": false,
     "strictPropertyInitialization": false,
     "noImplicitThis": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "removeComments": false,
+    "removeComments": true,
     "types": [
       "lodash",
       "screeps"
     ]
   },
-  "include": [
-    "src/**/*.ts",
-    "typings/creep-tasks.d.ts"
-  ],
   "exclude": [
     "node_modules",
     "examples"
   ]
 }
-

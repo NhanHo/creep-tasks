@@ -1,9 +1,10 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type getRenewedTargetType = StructureSpawn;
 
 export class TaskGetRenewed extends Task {
 	static taskName = 'getRenewed';
+	// @ts-ignore
 	target: getRenewedTargetType;
 
 	constructor(target: getRenewedTargetType, options = {} as TaskOptions) {

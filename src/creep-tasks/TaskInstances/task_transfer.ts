@@ -1,5 +1,5 @@
-import {Task} from '../Task';
-import {EnergyStructure, isEnergyStructure, isStoreStructure, StoreStructure} from '../utilities/helpers';
+import { Task } from '../Task';
+import { EnergyStructure, isEnergyStructure, isStoreStructure, StoreStructure } from '../utilities/helpers';
 
 export type transferTargetType =
 	EnergyStructure
@@ -13,6 +13,7 @@ export class TaskTransfer extends Task {
 
 	static taskName = 'transfer';
 
+	// @ts-ignore
 	target: transferTargetType;
 	data: {
 		resourceType: ResourceConstant
@@ -20,9 +21,9 @@ export class TaskTransfer extends Task {
 	};
 
 	constructor(target: transferTargetType,
-				resourceType: ResourceConstant = RESOURCE_ENERGY,
-				amount: number | undefined     = undefined,
-				options                        = {} as TaskOptions) {
+		resourceType: ResourceConstant = RESOURCE_ENERGY,
+		amount: number | undefined = undefined,
+		options = {} as TaskOptions) {
 		super(TaskTransfer.taskName, target, options);
 		// Settings
 		this.settings.oneShot = true;
@@ -48,13 +49,13 @@ export class TaskTransfer extends Task {
 		} else {
 			if (target instanceof StructureLab) {
 				return (target.mineralType == this.data.resourceType || !target.mineralType) &&
-					   target.mineralAmount <= target.mineralCapacity - amount;
+					target.mineralAmount <= target.mineralCapacity - amount;
 			} else if (target instanceof StructureNuker) {
 				return this.data.resourceType == RESOURCE_GHODIUM &&
-					   target.ghodium <= target.ghodiumCapacity - amount;
+					target.ghodium <= target.ghodiumCapacity - amount;
 			} else if (target instanceof StructurePowerSpawn) {
 				return this.data.resourceType == RESOURCE_POWER &&
-					   target.power <= target.powerCapacity - amount;
+					target.power <= target.powerCapacity - amount;
 			}
 		}
 		return false;

@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type reserveTargetType = StructureController;
 
 export class TaskReserve extends Task {
 
 	static taskName = 'reserve';
+	// @ts-ignore
 	target: reserveTargetType;
 
 	constructor(target: reserveTargetType, options = {} as TaskOptions) {

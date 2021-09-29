@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type upgradeTargetType = StructureController;
 
 export class TaskUpgrade extends Task {
 
 	static taskName = 'upgrade';
+	// @ts-ignore
 	target: upgradeTargetType;
 
 	constructor(target: upgradeTargetType, options = {} as TaskOptions) {

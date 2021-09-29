@@ -1,4 +1,4 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 
 export type transferAllTargetType = StructureStorage | StructureTerminal | StructureContainer;
@@ -6,6 +6,7 @@ export type transferAllTargetType = StructureStorage | StructureTerminal | Struc
 export class TaskTransferAll extends Task {
 
 	static taskName = 'transferAll';
+	// @ts-ignore
 	target: transferAllTargetType;
 
 	data: {

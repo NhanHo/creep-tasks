@@ -1,11 +1,12 @@
 // TaskDismantle: dismantles a structure
 
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type dismantleTargetType = Structure;
 
 export class TaskDismantle extends Task {
 	static taskName = 'dismantle';
+	// @ts-ignore
 	target: dismantleTargetType;
 
 	constructor(target: dismantleTargetType, options = {} as TaskOptions) {

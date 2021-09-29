@@ -1,7 +1,7 @@
 /* This is the withdrawal task for non-energy resources. */
 
-import {Task} from '../Task';
-import {EnergyStructure, isEnergyStructure, isStoreStructure, StoreStructure} from '../utilities/helpers';
+import { Task } from '../Task';
+import { EnergyStructure, isEnergyStructure, isStoreStructure, StoreStructure } from '../utilities/helpers';
 
 export type withdrawTargetType =
 	EnergyStructure
@@ -14,6 +14,7 @@ export type withdrawTargetType =
 export class TaskWithdraw extends Task {
 
 	static taskName = 'withdraw';
+	// @ts-ignore
 	target: withdrawTargetType;
 	data: {
 		resourceType: ResourceConstant,
@@ -21,9 +22,9 @@ export class TaskWithdraw extends Task {
 	};
 
 	constructor(target: withdrawTargetType,
-				resourceType: ResourceConstant = RESOURCE_ENERGY,
-				amount: number | undefined     = undefined,
-				options                        = {} as TaskOptions) {
+		resourceType: ResourceConstant = RESOURCE_ENERGY,
+		amount: number | undefined = undefined,
+		options = {} as TaskOptions) {
 		super(TaskWithdraw.taskName, target, options);
 		// Settings
 		this.settings.oneShot = true;

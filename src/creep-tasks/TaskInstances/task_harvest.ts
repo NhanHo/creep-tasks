@@ -1,4 +1,4 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type harvestTargetType = Source | Mineral;
 
@@ -9,6 +9,7 @@ function isSource(obj: Source | Mineral): obj is Source {
 export class TaskHarvest extends Task {
 
 	static taskName = 'harvest';
+	// @ts-ignore
 	target: harvestTargetType;
 
 	constructor(target: harvestTargetType, options = {} as TaskOptions) {

@@ -1,4 +1,4 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 
 export type withdrawAllTargetType = StructureStorage | StructureTerminal | StructureContainer | Tombstone;
@@ -6,6 +6,7 @@ export type withdrawAllTargetType = StructureStorage | StructureTerminal | Struc
 export class TaskWithdrawAll extends Task {
 
 	static taskName = 'withdrawAll';
+	// @ts-ignore
 	target: withdrawAllTargetType;
 
 	constructor(target: withdrawAllTargetType, options = {} as TaskOptions) {

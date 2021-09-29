@@ -1,12 +1,13 @@
 // TaskBuild: builds a construction site until creep has no energy or site is complete
 
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type buildTargetType = ConstructionSite;
 
 export class TaskBuild extends Task {
 
 	static taskName = 'build';
+	// @ts-ignore
 	target: buildTargetType;
 
 	constructor(target: buildTargetType, options = {} as TaskOptions) {

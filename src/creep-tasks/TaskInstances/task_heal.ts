@@ -1,10 +1,11 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type healTargetType = Creep;
 
 export class TaskHeal extends Task {
 
 	static taskName = 'heal';
+	// @ts-ignore
 	target: healTargetType;
 
 	constructor(target: healTargetType, options = {} as TaskOptions) {
