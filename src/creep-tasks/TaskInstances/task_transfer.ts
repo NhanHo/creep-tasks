@@ -2,8 +2,12 @@ import { Task } from '../Task';
 import { EnergyStructure, isEnergyStructure, isStoreStructure, StoreStructure } from '../utilities/helpers';
 
 export type transferTargetType =
-	EnergyStructure
-	| StoreStructure
+	StructureContainer
+	| StructureExtension
+	| StructureFactory
+	| StructureSpawn
+	| StructureTerminal
+	| StructureTower
 	| StructureLab
 	| StructureNuker
 	| StructurePowerSpawn
@@ -39,26 +43,7 @@ export class TaskTransfer extends Task {
 
 	isValidTarget() {
 		let amount = this.data.amount || 1;
-		let target = this.target;
-		if (target instanceof Creep) {
-			return _.sum(target.carry) <= target.carryCapacity - amount;
-		} else if (isStoreStructure(target)) {
-			return _.sum(target.store) <= target.storeCapacity - amount;
-		} else if (isEnergyStructure(target) && this.data.resourceType == RESOURCE_ENERGY) {
-			return target.energy <= target.energyCapacity - amount;
-		} else {
-			if (target instanceof StructureLab) {
-				return (target.mineralType == this.data.resourceType || !target.mineralType) &&
-					target.mineralAmount <= target.mineralCapacity - amount;
-			} else if (target instanceof StructureNuker) {
-				return this.data.resourceType == RESOURCE_GHODIUM &&
-					target.ghodium <= target.ghodiumCapacity - amount;
-			} else if (target instanceof StructurePowerSpawn) {
-				return this.data.resourceType == RESOURCE_POWER &&
-					target.power <= target.powerCapacity - amount;
-			}
-		}
-		return false;
+		return this.target.store.getFreeCapacity(this.data.resourceType) >= amount;
 	}
 
 	work() {

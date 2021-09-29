@@ -1,20 +1,21 @@
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type goToTargetType = { pos: RoomPosition } | RoomPosition;
 
 function hasPos(obj: { pos: RoomPosition } | RoomPosition): obj is { pos: RoomPosition } {
-	return (<{ pos: RoomPosition } >obj).pos != undefined;
+	return (<{ pos: RoomPosition }>obj).pos != undefined;
 }
 
 export class TaskGoTo extends Task {
 	static taskName = 'goTo';
+	// @ts-ignore
 	target: null;
 
 	constructor(target: goToTargetType, options = {} as TaskOptions) {
 		if (hasPos(target)) {
-			super(TaskGoTo.taskName, {ref: '', pos: target.pos}, options);
+			super(TaskGoTo.taskName, { ref: '', pos: target.pos }, options);
 		} else {
-			super(TaskGoTo.taskName, {ref: '', pos: target}, options);
+			super(TaskGoTo.taskName, { ref: '', pos: target }, options);
 		}
 		// Settings
 		this.settings.targetRange = 1;

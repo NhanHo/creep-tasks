@@ -1,12 +1,13 @@
 // TaskDrop: drops a resource at a position
 
-import {Task} from '../Task';
+import { Task } from '../Task';
 
 export type dropTargetType = { pos: RoomPosition } | RoomPosition;
 
 export class TaskDrop extends Task {
 
 	static taskName = 'drop';
+	// @ts-ignore
 	target: null;
 	data: {
 		resourceType: ResourceConstant
@@ -14,13 +15,13 @@ export class TaskDrop extends Task {
 	};
 
 	constructor(target: dropTargetType,
-				resourceType: ResourceConstant = RESOURCE_ENERGY,
-				amount: number | undefined     = undefined,
-				options                        = {} as TaskOptions) {
+		resourceType: ResourceConstant = RESOURCE_ENERGY,
+		amount: number | undefined = undefined,
+		options = {} as TaskOptions) {
 		if (target instanceof RoomPosition) {
-			super(TaskDrop.taskName, {ref: '', pos: target}, options);
+			super(TaskDrop.taskName, { ref: '', pos: target }, options);
 		} else {
-			super(TaskDrop.taskName, {ref: '', pos: target.pos}, options);
+			super(TaskDrop.taskName, { ref: '', pos: target.pos }, options);
 		}
 		// Settings
 		this.settings.oneShot = true;

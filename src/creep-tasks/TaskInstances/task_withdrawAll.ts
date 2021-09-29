@@ -14,11 +14,11 @@ export class TaskWithdrawAll extends Task {
 	}
 
 	isValidTask() {
-		return (_.sum(this.creep.carry) < this.creep.carryCapacity);
+		return this.creep.store.getFreeCapacity() > 0;
 	}
 
 	isValidTarget() {
-		return _.sum(this.target.store) > 0;
+		return this.target.store.getUsedCapacity() > 0;
 	}
 
 	work() {
