@@ -1054,6 +1054,28 @@ RoomPosition.prototype.availableNeighbors = function (ignoreCreeps = false) {
     return _.filter(this.neighbors, pos => pos.isPassible(ignoreCreeps));
 };
 
+class TaskCreepWithdraw extends Task {
+    constructor(target, resourceType = RESOURCE_ENERGY, amount = undefined, options = {}) {
+        super(TaskCreepWithdraw.taskName, target, options);
+        this.settings.oneShot = true;
+        this.data.resourceType = resourceType;
+        this.data.amount = amount;
+    }
+    isValidTask() {
+        const amount = this.data.amount || 1;
+        return _.sum(this.creep.carry) <= this.creep.carryCapacity - amount;
+    }
+    isValidTarget() {
+        const amount = this.data.amount || 1;
+        const target = this.target;
+        return (target.carry[this.data.resourceType] || 0) >= amount;
+    }
+    work() {
+        return this.target.transfer(this.creep, this.data.resourceType, this.data.amount);
+    }
+}
+TaskCreepWithdraw.taskName = "creep_withdraw";
+
 class Tasks {
     static chain(tasks, setNextPos = true) {
         if (tasks.length == 0) {
@@ -1139,6 +1161,9 @@ class Tasks {
     }
     static withdrawAll(target, options = {}) {
         return new TaskWithdrawAll(target, options);
+    }
+    static creepWithdraw(target, resourceType = RESOURCE_ENERGY, amount = undefined, options = {}) {
+        return new TaskCreepWithdraw(target, resourceType, amount, options);
     }
 }
 
