@@ -842,6 +842,28 @@ class TaskWithdrawAll extends Task {
 }
 TaskWithdrawAll.taskName = 'withdrawAll';
 
+class TaskCreepWithdraw extends Task {
+    constructor(target, resourceType = RESOURCE_ENERGY, amount = undefined, options = {}) {
+        super(TaskCreepWithdraw.taskName, target, options);
+        this.settings.oneShot = true;
+        this.data.resourceType = resourceType;
+        this.data.amount = amount;
+    }
+    isValidTask() {
+        const amount = this.data.amount || 1;
+        return _.sum(this.creep.carry) <= this.creep.carryCapacity - amount;
+    }
+    isValidTarget() {
+        const amount = this.data.amount || 1;
+        const target = this.target;
+        return (target.carry[this.data.resourceType] || 0) >= amount;
+    }
+    work() {
+        return this.target.transfer(this.creep, this.data.resourceType, this.data.amount);
+    }
+}
+TaskCreepWithdraw.taskName = "creep_withdraw";
+
 function initializeTask(protoTask) {
     let taskName = protoTask.name;
     let target = deref(protoTask._target.ref);
@@ -916,6 +938,9 @@ function initializeTask(protoTask) {
         case TaskWithdrawAll.taskName:
             task = new TaskWithdrawAll(target);
             break;
+        case TaskCreepWithdraw.taskName:
+            task = new TaskCreepWithdraw(target);
+            break;
         default:
             console.log(`Invalid task name: ${taskName}! task.creep: ${protoTask._creep.name}. Deleting from memory!`);
             task = new TaskInvalid(target);
@@ -955,6 +980,7 @@ class TargetCache {
 }
 
 Object.defineProperty(Creep.prototype, 'task', {
+    configurable: true,
     get() {
         if (!this._task) {
             let protoTask = this.memory.task;
@@ -991,33 +1017,39 @@ Creep.prototype.run = function () {
 };
 Object.defineProperties(Creep.prototype, {
     'hasValidTask': {
+        configurable: true,
         get() {
             return this.task && this.task.isValid();
         }
     },
     'isIdle': {
+        configurable: true,
         get() {
             return !this.hasValidTask;
         }
     }
 });
 Object.defineProperty(RoomObject.prototype, 'ref', {
+    configurable: true,
     get: function () {
         return this.id || this.name || '';
     },
 });
 Object.defineProperty(RoomObject.prototype, 'targetedBy', {
+    configurable: true,
     get: function () {
         TargetCache.assert();
         return _.map(Game.TargetCache.targets[this.ref], name => Game.creeps[name]);
     },
 });
 Object.defineProperty(RoomPosition.prototype, 'isEdge', {
+    configurable: true,
     get: function () {
         return this.x == 0 || this.x == 49 || this.y == 0 || this.y == 49;
     },
 });
 Object.defineProperty(RoomPosition.prototype, 'neighbors', {
+    configurable: true,
     get: function () {
         let adjPos = [];
         for (let dx of [-1, 0, 1]) {
@@ -1053,28 +1085,6 @@ RoomPosition.prototype.isPassible = function (ignoreCreeps = false) {
 RoomPosition.prototype.availableNeighbors = function (ignoreCreeps = false) {
     return _.filter(this.neighbors, pos => pos.isPassible(ignoreCreeps));
 };
-
-class TaskCreepWithdraw extends Task {
-    constructor(target, resourceType = RESOURCE_ENERGY, amount = undefined, options = {}) {
-        super(TaskCreepWithdraw.taskName, target, options);
-        this.settings.oneShot = true;
-        this.data.resourceType = resourceType;
-        this.data.amount = amount;
-    }
-    isValidTask() {
-        const amount = this.data.amount || 1;
-        return _.sum(this.creep.carry) <= this.creep.carryCapacity - amount;
-    }
-    isValidTarget() {
-        const amount = this.data.amount || 1;
-        const target = this.target;
-        return (target.carry[this.data.resourceType] || 0) >= amount;
-    }
-    work() {
-        return this.target.transfer(this.creep, this.data.resourceType, this.data.amount);
-    }
-}
-TaskCreepWithdraw.taskName = "creep_withdraw";
 
 class Tasks {
     static chain(tasks, setNextPos = true) {

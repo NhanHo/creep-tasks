@@ -1,32 +1,32 @@
 // Reinstantiation of a task object from protoTask data
 
-import {Task} from '../Task';
-import {attackTargetType, TaskAttack} from '../TaskInstances/task_attack';
-import {buildTargetType, TaskBuild} from '../TaskInstances/task_build';
-import {claimTargetType, TaskClaim} from '../TaskInstances/task_claim';
-import {dismantleTargetType, TaskDismantle} from '../TaskInstances/task_dismantle';
-import {fortifyTargetType, TaskFortify} from '../TaskInstances/task_fortify';
-import {getBoostedTargetType, TaskGetBoosted} from '../TaskInstances/task_getBoosted';
-import {getRenewedTargetType, TaskGetRenewed} from '../TaskInstances/task_getRenewed';
-import {goToTargetType, TaskGoTo} from '../TaskInstances/task_goTo';
-import {goToRoomTargetType, TaskGoToRoom} from '../TaskInstances/task_goToRoom';
-import {harvestTargetType, TaskHarvest} from '../TaskInstances/task_harvest';
-import {healTargetType, TaskHeal} from '../TaskInstances/task_heal';
-import {meleeAttackTargetType, TaskMeleeAttack} from '../TaskInstances/task_meleeAttack';
-import {pickupTargetType, TaskPickup} from '../TaskInstances/task_pickup';
-import {rangedAttackTargetType, TaskRangedAttack} from '../TaskInstances/task_rangedAttack';
-import {TaskWithdraw, withdrawTargetType} from '../TaskInstances/task_withdraw';
-import {repairTargetType, TaskRepair} from '../TaskInstances/task_repair';
-import {reserveTargetType, TaskReserve} from '../TaskInstances/task_reserve';
-import {signControllerTargetType, TaskSignController} from '../TaskInstances/task_signController';
-import {TaskTransfer, transferTargetType} from '../TaskInstances/task_transfer';
-import {TaskUpgrade, upgradeTargetType} from '../TaskInstances/task_upgrade';
-import {dropTargetType, TaskDrop} from '../TaskInstances/task_drop';
-import {deref, derefRoomPosition} from './helpers';
-import {TaskInvalid} from '../TaskInstances/task_invalid';
-import {TaskTransferAll} from '../TaskInstances/task_transferAll';
-import {TaskWithdrawAll, withdrawAllTargetType} from '../TaskInstances/task_withdrawAll';
-
+import { Task } from '../Task';
+import { attackTargetType, TaskAttack } from '../TaskInstances/task_attack';
+import { buildTargetType, TaskBuild } from '../TaskInstances/task_build';
+import { claimTargetType, TaskClaim } from '../TaskInstances/task_claim';
+import { dismantleTargetType, TaskDismantle } from '../TaskInstances/task_dismantle';
+import { fortifyTargetType, TaskFortify } from '../TaskInstances/task_fortify';
+import { getBoostedTargetType, TaskGetBoosted } from '../TaskInstances/task_getBoosted';
+import { getRenewedTargetType, TaskGetRenewed } from '../TaskInstances/task_getRenewed';
+import { goToTargetType, TaskGoTo } from '../TaskInstances/task_goTo';
+import { goToRoomTargetType, TaskGoToRoom } from '../TaskInstances/task_goToRoom';
+import { harvestTargetType, TaskHarvest } from '../TaskInstances/task_harvest';
+import { healTargetType, TaskHeal } from '../TaskInstances/task_heal';
+import { meleeAttackTargetType, TaskMeleeAttack } from '../TaskInstances/task_meleeAttack';
+import { pickupTargetType, TaskPickup } from '../TaskInstances/task_pickup';
+import { rangedAttackTargetType, TaskRangedAttack } from '../TaskInstances/task_rangedAttack';
+import { TaskWithdraw, withdrawTargetType } from '../TaskInstances/task_withdraw';
+import { repairTargetType, TaskRepair } from '../TaskInstances/task_repair';
+import { reserveTargetType, TaskReserve } from '../TaskInstances/task_reserve';
+import { signControllerTargetType, TaskSignController } from '../TaskInstances/task_signController';
+import { TaskTransfer, transferTargetType } from '../TaskInstances/task_transfer';
+import { TaskUpgrade, upgradeTargetType } from '../TaskInstances/task_upgrade';
+import { dropTargetType, TaskDrop } from '../TaskInstances/task_drop';
+import { deref, derefRoomPosition } from './helpers';
+import { TaskInvalid } from '../TaskInstances/task_invalid';
+import { TaskTransferAll } from '../TaskInstances/task_transferAll';
+import { TaskWithdrawAll, withdrawAllTargetType } from '../TaskInstances/task_withdrawAll';
+import { TaskCreepWithdraw, creepWithdrawTargetType } from "../TaskInstances/task_creep_withdraw";
 
 export function initializeTask(protoTask: protoTask): Task {
 	// Retrieve name and target data from the protoTask
@@ -55,7 +55,7 @@ export function initializeTask(protoTask: protoTask): Task {
 			break;
 		case TaskGetBoosted.taskName:
 			task = new TaskGetBoosted(target as getBoostedTargetType,
-									  protoTask.data.resourceType as _ResourceConstantSansEnergy);
+				protoTask.data.resourceType as _ResourceConstantSansEnergy);
 			break;
 		case TaskGetRenewed.taskName:
 			task = new TaskGetRenewed(target as getRenewedTargetType);
@@ -105,6 +105,9 @@ export function initializeTask(protoTask: protoTask): Task {
 		case TaskWithdrawAll.taskName:
 			task = new TaskWithdrawAll(target as withdrawAllTargetType);
 			break;
+		case TaskCreepWithdraw.taskName:
+			task = new TaskCreepWithdraw(target as creepWithdrawTargetType);
+			break;
 		default:
 			console.log(`Invalid task name: ${taskName}! task.creep: ${protoTask._creep.name}. Deleting from memory!`);
 			task = new TaskInvalid(target as any);
@@ -115,4 +118,3 @@ export function initializeTask(protoTask: protoTask): Task {
 	// Return it
 	return task;
 }
-

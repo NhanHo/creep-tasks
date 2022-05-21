@@ -3,6 +3,6 @@
 
 'use strict';
 import './creep-tasks/prototypes';
-import {Tasks} from './creep-tasks/Tasks';
+import { Tasks } from './creep-tasks/Tasks';
 
 export default Tasks;
