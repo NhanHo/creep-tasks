@@ -1,7 +1,7 @@
 'use strict';
 
 function deref(ref) {
-    return Game.getObjectById(ref) || Game.flags[ref] || Game.creeps[ref] || Game.spawns[ref] || null;
+    return (Game.getObjectById(ref) || Game.flags[ref] || Game.creeps[ref] || Game.spawns[ref] || null);
 }
 function derefRoomPosition(protoPos) {
     return new RoomPosition(protoPos.x, protoPos.y, protoPos.roomName);
